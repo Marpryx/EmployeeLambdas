@@ -23,14 +23,22 @@ public class Main {
         employeeList.add(dzen);
 
 
-        //To sort the elements of the List in specific order
+        //Step 1 - Regular way used in Java7: To sort the elements of the List in specific order
 
-        Collections.sort(employeeList, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee employee1, Employee employee2) {
-                return employee1.getName().compareTo(employee2.getName());
-            }
-        });
+//        Collections.sort(employeeList, new Comparator<Employee>() {
+//            @Override
+//            public int compare(Employee employee1, Employee employee2) {
+//                return employee1.getName().compareTo(employee2.getName());
+//            }
+//        });
+
+        //Step 2 - Java8: To sort the elements of the List in specific order by using Lambda expression
+//        Collections.sort(employeeList, (Employee employee1, Employee employee2) ->
+//                employee1.getName().compareTo(employee2.getName()));
+
+
+        //Step 3 - Java8: To sort the elements of the List in specific order by using method reference
+        Collections.sort(employeeList, Comparator.comparing(Employee::getName));
 
         for(Employee employee : employeeList){
             System.out.println(employee.getName());
