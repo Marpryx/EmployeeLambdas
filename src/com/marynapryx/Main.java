@@ -40,9 +40,15 @@ public class Main {
         //Step 3 - Java8: To sort the elements of the List in specific order by using method reference
         Collections.sort(employeeList, Comparator.comparing(Employee::getName));
 
-        for(Employee employee : employeeList){
-            System.out.println(employee.getName());
-        }
+
+
+        //Step 4 - For each loop to loop through the list
+//        for(Employee employee : employeeList){
+//            System.out.println(employee.getName());
+//        }
+
+        //Step 4 - For each loop modified to .forEach + Lambda
+        employeeList.forEach((v) -> System.out.println(v.getName()));
 
     }
 
