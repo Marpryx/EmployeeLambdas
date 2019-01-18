@@ -1,9 +1,7 @@
 package com.marynapryx;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class Main {
 
@@ -14,6 +12,7 @@ public class Main {
         Employee linda = new Employee("Linda Golovna", "software developer", 47, 18);
         Employee sergio = new Employee("Sergio Govanny", "QA analist", 33, 4);
         Employee dzen = new Employee("Dzen Ioanna", "manager", 45, 16);
+        Employee jilly = new Employee("Jilly Jackson", "devOps", 33, 1);
 
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(elly);
@@ -21,6 +20,8 @@ public class Main {
         employeeList.add(linda);
         employeeList.add(sergio);
         employeeList.add(dzen);
+        employeeList.add(jilly);
+
 
 
         //Step 1 - Regular way used in Java7: To sort the elements of the List in specific order
@@ -37,7 +38,8 @@ public class Main {
 //                employee1.getName().compareTo(employee2.getName()));
 
 
-        //Step 3 - Java8: To sort the elements of the List in specific order by using method reference
+        //Step 3 - Java8: To sort the elements of the List in specific order by using method reference.
+        //Method references let us reuse a method as a lambda expression
         Collections.sort(employeeList, Comparator.comparing(Employee::getName));
 
 
@@ -50,55 +52,20 @@ public class Main {
         //Step 4 - For each loop modified to .forEach + Lambda
         employeeList.forEach((v) -> System.out.println(v.getName()));
 
+        System.out.println("==================");
+
+
+        //Convert collection to Stream - A stream represents a sequence of elements and supports different kind of
+        // operations to perform computations upon those elements
+         employeeList.stream()
+                     .filter(s -> s.getName().startsWith("J")) //Filter to output only the name starts with "J"
+                     .map(Employee::getName)
+                     .sorted() //sorted in case if it will give more than 1 line of output
+                     .forEach(System.out::println);
+
     }
+
+
 
 }
 
-/**
- * Simple Employee class that is a blueprint for creating an Employee objects
- */
-class Employee{
-    private String name;
-    private String position;
-    private int age;
-    private int experience;
-
-    public Employee(String name, String position, int age, int experience) {
-        this.name = name;
-        this.position = position;
-        this.age = age;
-        this.experience = experience;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-}
