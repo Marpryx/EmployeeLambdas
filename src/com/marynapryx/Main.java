@@ -2,12 +2,14 @@ package com.marynapryx;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Employee elly = new Employee("Elly Mirkat", "manager", 30, 4);
+        Employee ellyS = new Employee("Elly Mirkat", "manager", 23, 1);
         Employee jack = new Employee("Jack Bim", "SEO", 45, 12);
         Employee linda = new Employee("Linda Golovna", "software developer", 47, 18);
         Employee sergio = new Employee("Sergio Govanny", "QA analist", 33, 4);
@@ -16,6 +18,7 @@ public class Main {
 
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(elly);
+        employeeList.add(ellyS);
         employeeList.add(jack);
         employeeList.add(linda);
         employeeList.add(sergio);
@@ -52,17 +55,40 @@ public class Main {
         //Step 4 - For each loop modified to .forEach + Lambda
         employeeList.forEach((v) -> System.out.println(v.getName()));
 
-        System.out.println("==================");
-
-
         //Convert collection to Stream - A stream represents a sequence of elements and supports different kind of
         // operations to perform computations upon those elements
+        // There are some of the available operations in the code below
+
+        System.out.println("============Stream with Filter==========");
+
          employeeList.stream()
                      .filter(s -> s.getName().startsWith("J")) //Filter to output only the name starts with "J"
                      .map(Employee::getName)
                      .sorted() //sorted in case if it will give more than 1 line of output
                      .forEach(System.out::println);
 
+
+        System.out.println("=========Count the elements of the stream ===========");
+
+        System.out.println(employeeList.stream()
+                                       .count());
+
+        System.out.println("=========Print the first element of the Stream if it exists ===========");
+
+        employeeList.stream()
+                .findFirst()
+                .map(Employee::getPosition)
+                .ifPresent(System.out::println);
+
+        System.out.println("==========Print the employee names group by and + age");
+        System.out.println(employeeList.stream()
+                    .collect(Collectors.groupingBy
+                            (Employee::getName, Collectors.summingInt(Employee::getAge))));
+
+        System.out.println("==========Print the employee names group by and count if there are similar names");
+        System.out.println(employeeList.stream()
+                .collect(Collectors.groupingBy
+                        (Employee::getName,Collectors.counting())));
     }
 
 
